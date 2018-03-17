@@ -16,113 +16,45 @@
     </xs:element>    
     <xs:complexType name="personType">
         <xs:sequence>
-            <xs:element type="nonEmptyString" name="name" >
-                <xs:annotation>
-                    <xs:documentation> name is required, non-empty string </xs:documentation>
-                </xs:annotation>
-            </xs:element>
-            <xs:element type="nonEmptyString" name="surname">
-                <xs:annotation>
-                    <xs:documentation> surname is required, non-empty string </xs:documentation>
-                </xs:annotation>
-            </xs:element>
-            <xs:element type="amountType" name="salary">
-                <xs:annotation>
-                    <xs:documentation> salary is required, positive number 
-                        with 2 decimal places precision, e.g. 10000.50 </xs:documentation>
-                </xs:annotation>
-            </xs:element>
-            <xs:element type="xs:string" name="note" minOccurs="0" maxOccurs="unbounded">
-                <xs:annotation>
-                    <xs:documentation> note optional element, repeatable, contains any string </xs:documentation>
-                </xs:annotation>
-            </xs:element>
+            <xs:element type="nonEmptyString" name="name" />
+            <xs:element type="nonEmptyString" name="surname" />
+            <xs:element type="amountType" name="salary" />
+            <xs:element type="xs:string" name="note" minOccurs="0" maxOccurs="unbounded" />
         </xs:sequence>
         <xs:attribute type="xs:positiveInteger" name="pid" use="required"/>
     </xs:complexType>
     <xs:complexType name="headType">
         <xs:sequence>
-            <xs:element type="personType" name="person">
-                <xs:annotation>
-                    <xs:documentation> pid is required, unique (positive) integer 
-                        (can be used as a key for persons);
-                        the name, surname, salary elts. can be ordered in any order </xs:documentation>
-                </xs:annotation>
-            </xs:element>
+            <xs:element type="personType" name="person" />
         </xs:sequence>
     </xs:complexType>
     <xs:complexType name="employeeType">
         <xs:sequence>
-            <xs:element type="employeeNameType" name="name" minOccurs="0">
-                <xs:annotation>
-                    <xs:documentation> Division employee
-                        category - employee category, one of worker, contractor, developer, thp
-                        eid - unique employee id, mandatory attribute, numeric value
-                    </xs:documentation>
-                </xs:annotation>
-            </xs:element>
-            <xs:element type="amountType" name="salary" minOccurs="0">
-                <xs:annotation>
-                    <xs:documentation> name of the worker, two string of letters and whitespaces 
-                        begining with uppercase, 
-                    </xs:documentation>
-                </xs:annotation>
-            </xs:element>
-            <xs:element type="xs:string" name="company" minOccurs="0">
-                <xs:annotation>
-                    <xs:documentation> employee of type contractor </xs:documentation>
-                </xs:annotation>
-            </xs:element>
-            <xs:element type="amountType" name="fee" minOccurs="0">
-                <xs:annotation>
-                    <xs:documentation> Contractor's company. Any string. </xs:documentation>
-                </xs:annotation>
-            </xs:element>
-            <xs:element type="yesNo" name="vat" minOccurs="0">
-                <xs:annotation>
-                    <xs:documentation> Contractor fee per contract, positive number, with 2 decimal </xs:documentation>
-                </xs:annotation>
-            </xs:element>
+            <xs:element type="employeeNameType" name="name" minOccurs="0" />
+            <xs:element type="amountType" name="salary" minOccurs="0" />
+            <xs:element type="xs:string" name="company" minOccurs="0" />
+            <xs:element type="amountType" name="fee" minOccurs="0" />
+            <xs:element type="yesNo" name="vat" minOccurs="0" />
         </xs:sequence>
-        <xs:attribute type="categoryType" name="category" use="optional"/>
+        <xs:attribute type="categoryType" name="category" use="required"/>
         <xs:attribute type="xs:positiveInteger" name="eid" use="required"/>
     </xs:complexType>
     <xs:complexType name="employeesType">
         <xs:sequence>
-            <xs:element type="employeeType" name="employee" maxOccurs="unbounded" minOccurs="0">
-                <xs:annotation>
-                    <xs:documentation> optional element, employees of the division. Must contain one or more 
-                        elements employee Employee salary
-                        negative number with 2 decimal places precision  Is the contractor a VAT payer (yes/no) </xs:documentation>
-                </xs:annotation>
-            </xs:element>
+            <xs:element type="employeeType" name="employee" maxOccurs="unbounded" minOccurs="0" />
         </xs:sequence>
     </xs:complexType>
     <xs:complexType name="divisionType">
         <xs:sequence>
-            <xs:element type="xs:string" name="name" minOccurs="0">
-                <xs:annotation>
-                    <xs:documentation> name is optional and contains any string </xs:documentation>
-                </xs:annotation>
-            </xs:element>
-            <xs:element type="headType" name="head" minOccurs="0" >
-                <xs:annotation>
-                    <xs:documentation> head is optional and contains always a person if present </xs:documentation>
-                </xs:annotation>
-            </xs:element>
+            <xs:element type="xs:string" name="name" minOccurs="0" />
+            <xs:element type="headType" name="head" minOccurs="0"  />
             <xs:element type="employeesType" name="employees" minOccurs="0" />
         </xs:sequence>
         <xs:attribute type="nonEmptyString" name="did" use="required"/>
     </xs:complexType>
     <xs:complexType name="companyType">
         <xs:sequence>
-            <xs:element type="divisionType" name="division" maxOccurs="unbounded">
-                <xs:annotation>
-                    <xs:documentation> did is required, a nonempty string unique for all divisions 
-                        mandatory element
-                        (can be used as a key for divisions) </xs:documentation>
-                </xs:annotation>
-            </xs:element>
+            <xs:element type="divisionType" name="division" maxOccurs="unbounded" />
         </xs:sequence>
     </xs:complexType>
     <xs:simpleType name="nonEmptyString">
@@ -132,7 +64,7 @@
     </xs:simpleType>
     <xs:simpleType name="amountType">
         <xs:restriction base="xs:decimal">
-            <xs:fractionDigits value="2" />
+            <xs:pattern value="\d+\.\d{2}" />
             <xs:minExclusive value="0" />
         </xs:restriction>
     </xs:simpleType>

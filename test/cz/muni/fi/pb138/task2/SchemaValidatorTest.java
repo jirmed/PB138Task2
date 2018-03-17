@@ -9,7 +9,6 @@ import java.io.File;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Collection;
-import static java.util.Collections.list;
 import java.util.List;
 import org.junit.Before;
 import org.junit.BeforeClass;
@@ -30,7 +29,7 @@ public class SchemaValidatorTest {
     public static Collection<Object[]> data() {
 
         List<Object[]> result;
-        List<Object[]> list = new ArrayList<Object[]>();
+        List<Object[]> list = new ArrayList<>();
         addFilesToTest(VALID, list, true);
         addFilesToTest(INVALID, list, false);
 
@@ -47,16 +46,15 @@ public class SchemaValidatorTest {
                     return name.toLowerCase().endsWith(".xml");
                 }
         );
-        for (int i = 0; i < files.length; i++) {
-            list.add(new Object[]{(expected ? VALID : INVALID) + '/' + files[i].getName(), expected});
+        for (File file : files) {
+            list.add(new Object[]{(expected ? VALID : INVALID) + '/' + file.getName(), expected});
         }
     }
     private static final String VALID = "src/valid";
     private static final String INVALID = "src/invalid";
 
-    private String fInput;
-
-    private Boolean fExpected;
+    private final String fInput;
+    private final Boolean fExpected;
     private SchemaValidator validator;
 
     public SchemaValidatorTest(String input, Boolean expected) {

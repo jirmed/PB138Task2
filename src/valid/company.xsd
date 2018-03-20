@@ -29,19 +29,23 @@
         </xs:sequence>
     </xs:complexType>
     <xs:complexType name="employeeType">
-        <xs:sequence>
-            <xs:element type="employeeNameType" name="name" minOccurs="0" />
-            <xs:element type="amountType" name="salary" minOccurs="0" />
-            <xs:element type="xs:string" name="company" minOccurs="0" />
-            <xs:element type="amountType" name="fee" minOccurs="0" />
-            <xs:element type="yesNo" name="vat" minOccurs="0" />
-        </xs:sequence>
+        <xs:choice>
+            <xs:sequence>
+                <xs:element type="employeeNameType" name="name" />
+                <xs:element type="amountType" name="salary" />
+            </xs:sequence>
+            <xs:sequence>
+                <xs:element type="xs:string" name="company" />
+                <xs:element type="amountType" name="fee" />
+                <xs:element type="yesNo" name="vat"  />
+            </xs:sequence>
+        </xs:choice>
         <xs:attribute type="categoryType" name="category" use="required"/>
         <xs:attribute type="xs:positiveInteger" name="eid" use="required"/>
     </xs:complexType>
     <xs:complexType name="employeesType">
         <xs:sequence>
-            <xs:element type="employeeType" name="employee" maxOccurs="unbounded" minOccurs="0" />
+            <xs:element type="employeeType" name="employee" maxOccurs="unbounded" />
         </xs:sequence>
     </xs:complexType>
     <xs:complexType name="divisionType">
